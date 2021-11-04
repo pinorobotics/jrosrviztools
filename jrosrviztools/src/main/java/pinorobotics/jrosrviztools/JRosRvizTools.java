@@ -26,10 +26,13 @@ import java.io.IOException;
 
 import id.jrosclient.JRosClient;
 import id.jrosclient.TopicSubmissionPublisher;
+import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
 import id.jrosmessages.geometry_msgs.QuaternionMessage;
+import id.jrosmessages.geometry_msgs.Vector3Message;
 import id.jrosmessages.primitives.Duration;
 import id.jrosmessages.primitives.Time;
+import id.jrosmessages.std_msgs.ColorRGBAMessage;
 import id.jrosmessages.std_msgs.HeaderMessage;
 import id.jrosmessages.std_msgs.StringMessage;
 import id.jrosmessages.visualization_msgs.MarkerArrayMessage;
@@ -49,6 +52,7 @@ public class JRosRvizTools implements Closeable {
     private boolean markerPublisherActive;
     private JRosClient client;
     private String baseFrame;
+    private volatile int nsCounter;
 
     public JRosRvizTools(JRosClient client, String baseFrame) {
         this.client = client;
@@ -58,7 +62,7 @@ public class JRosRvizTools implements Closeable {
     /**
      * Send text message to RViz which will be displayed at the given position.
      */
-    public void publishText(PoseMessage pose, String text, Color color, Scale scale) throws Exception {
+    public void publishText(ColorRGBAMessage color, Vector3Message scale, PoseMessage pose, String text) throws Exception {
         LOGGER.entering("publishText");
         if (!markerPublisherActive) {
             client.publish(markerPublisher);
@@ -66,13 +70,13 @@ public class JRosRvizTools implements Closeable {
         }
         publish(new MarkerMessage()
                 .withHeader(createHeader())
-                .withNs(new StringMessage("Text"))
+                .withNs(new StringMessage(nextNameSpace()))
                 .withType(Type.TEXT_VIEW_FACING)
                 .withAction(Action.ADD)
                 .withText(new StringMessage().withData(text))
                 .withPose(pose.withQuaternion(ORIENTATION))
-                .withColor(color.getMessage())
-                .withScale(scale.getMessage())
+                .withColor(color)
+                .withScale(scale)
                 .withLifetime(Duration.UNLIMITED));
         LOGGER.exiting("publishText");
     }
@@ -80,25 +84,34 @@ public class JRosRvizTools implements Closeable {
     /**
      * Publish new marker to RViz which will be displayed at the given coords
      */
-    public void publishMarker(MarkerType markerType, Coordinates coords, Color color, Scale scale) throws Exception {
+    public void publishMarkers(ColorRGBAMessage color, Vector3Message scale, MarkerMessage.Type markerType,
+            PointMessage... points) throws Exception {
         LOGGER.entering("publishMarker");
         if (!markerPublisherActive) {
             client.publish(markerPublisher);
             markerPublisherActive = true;
         }
-        publish(new MarkerMessage()
-                .withHeader(createHeader())
-                .withNs(new StringMessage("Marker"))
-                .withType(markerType.getType())
-                .withAction(Action.ADD)
-                .withPose(new PoseMessage()
-                        .withPosition(coords.getMessage())
-                        .withQuaternion(new QuaternionMessage()
-                                .withW(1.0)))
-                .withScale(scale.getMessage())
-                .withColor(color.getMessage())
-                .withLifetime(Duration.UNLIMITED));
+        var markers = new MarkerMessage[points.length];
+        for (int i = 0; i < markers.length; i++) {
+            markers[i] = new MarkerMessage()
+                    .withHeader(createHeader())
+                    .withNs(new StringMessage(nextNameSpace()))
+                    .withType(markerType)
+                    .withAction(Action.ADD)
+                    .withPose(new PoseMessage()
+                            .withPosition(points[i])
+                            .withQuaternion(new QuaternionMessage()
+                                    .withW(1.0)))
+                    .withScale(scale)
+                    .withColor(color)
+                    .withLifetime(Duration.UNLIMITED);
+        }
+        publish(markers);
         LOGGER.exiting("publishMarker");
+    }
+
+    private String nextNameSpace() {
+        return "@" + hashCode() + "." + nsCounter++;
     }
 
     @Override
@@ -112,9 +125,9 @@ public class JRosRvizTools implements Closeable {
         LOGGER.exiting("close");
     }
     
-    private void publish(MarkerMessage marker) {
+    private void publish(MarkerMessage... markers) {
         var message = new MarkerArrayMessage()
-                .withMarkers(marker);
+                .withMarkers(markers);
         while (markerPublisher.getNumberOfSubscribers() == 0) {
             LOGGER.fine("No subscribers");
             XThread.sleep(100);

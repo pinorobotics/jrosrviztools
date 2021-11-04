@@ -32,11 +32,10 @@ import org.junit.jupiter.api.Test;
 import id.jrosclient.JRosClient;
 import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
-import pinorobotics.jrosrviztools.Color;
-import pinorobotics.jrosrviztools.Coordinates;
+import id.jrosmessages.visualization_msgs.MarkerMessage;
+import pinorobotics.jrosrviztools.Colors;
 import pinorobotics.jrosrviztools.JRosRvizTools;
-import pinorobotics.jrosrviztools.MarkerType;
-import pinorobotics.jrosrviztools.Scale;
+import pinorobotics.jrosrviztools.Scales;
 
 public class JRosRvizToolsIntegrationTests {
 
@@ -57,8 +56,10 @@ public class JRosRvizToolsIntegrationTests {
     
     @Test
     public void test_publish_single() throws Exception {
-        rvizTools.publishText(new PoseMessage().withPosition(new PointMessage().withZ(1)),
-                "Hello from Java", Color.RED, Scale.XLARGE);
-        rvizTools.publishMarker(MarkerType.SPHERE, new Coordinates(1,0,1), Color.RED, Scale.XLARGE);
+        rvizTools.publishText(Colors.RED, Scales.XLARGE,
+                new PoseMessage().withPosition(new PointMessage().withZ(1)),
+                "Hello from Java");
+        rvizTools.publishMarkers(Colors.RED, Scales.XLARGE,
+                MarkerMessage.Type.SPHERE, new PointMessage(1,0,1));
     }
 }

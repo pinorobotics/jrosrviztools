@@ -21,22 +21,15 @@
  */
 package pinorobotics.jrosrviztools;
 
-import id.jrosmessages.geometry_msgs.Vector3Message;
+import id.jrosmessages.std_msgs.ColorRGBAMessage;
 
-public class Scale {
+public class Colors {
 
-    public static final Scale MEDIUM = new Scale(0.01);
-    public static final Scale LARGE = new Scale(0.025);
-    public static final Scale XLARGE = new Scale(0.05);
-   
-    private Vector3Message message;
-
-    public Scale(double scale) {
-        message = new Vector3Message(scale, scale, scale);
-    }
-    
-    Vector3Message getMessage() {
-        return message;
-    }
+    public static final ColorRGBAMessage RED = new ColorRGBAMessage(.8F, .1F, .1F, 1);
+    public static final ColorRGBAMessage GREEN = new ColorRGBAMessage(.1F, .8F, .1F, 1);
+    public static final ColorRGBAMessage GREY = new ColorRGBAMessage(.9F, .9F, .9F, 1);
+    public static final ColorRGBAMessage BLACK = new ColorRGBAMessage(.0F, .0F, .0F, 1);
+    public static final ColorRGBAMessage YELLOW = new ColorRGBAMessage(1.0F, 1.0F, .0F, 1);
+    public static final ColorRGBAMessage WHITE = new ColorRGBAMessage(1.F, 1.F, 1.F, 1);
     
 }
