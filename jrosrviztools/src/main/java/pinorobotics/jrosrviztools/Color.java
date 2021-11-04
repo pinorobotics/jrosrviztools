@@ -38,7 +38,7 @@ public enum Color {
         this.message = message;
     }
     
-    public ColorRGBAMessage getMessage() {
+    ColorRGBAMessage getMessage() {
         return message;
     }
     

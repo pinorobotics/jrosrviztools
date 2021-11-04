@@ -43,7 +43,6 @@ public class JRosRvizTools implements Closeable {
 
     private static final XLogger LOGGER = XLogger.getLogger(JRosRvizTools.class);
     private static final String RVIZ_MARKER_TOPIC = "/rviz_visual_tools";
-    private static final StringMessage NAMESPACE = new StringMessage("Text");
     private static final QuaternionMessage ORIENTATION = new QuaternionMessage()
                         .withW(1.0);
     private TopicSubmissionPublisher<MarkerArrayMessage> markerPublisher = new TopicSubmissionPublisher<>(MarkerArrayMessage.class, RVIZ_MARKER_TOPIC);
@@ -65,24 +64,41 @@ public class JRosRvizTools implements Closeable {
             client.publish(markerPublisher);
             markerPublisherActive = true;
         }
-        var message = new MarkerArrayMessage().withMarkers(new MarkerMessage()
-                .withHeader(new HeaderMessage()
-                        .withFrameId(baseFrame)
-                        .withStamp(Time.now()))
+        publish(new MarkerMessage()
+                .withHeader(createHeader())
+                .withNs(new StringMessage("Text"))
+                .withType(Type.TEXT_VIEW_FACING)
+                .withAction(Action.ADD)
                 .withText(new StringMessage().withData(text))
                 .withPose(pose.withQuaternion(ORIENTATION))
                 .withColor(color.getMessage())
                 .withScale(scale.getMessage())
-                .withNs(NAMESPACE)
-                .withAction(Action.ADD)
-                .withType(Type.TEXT_VIEW_FACING)
                 .withLifetime(Duration.UNLIMITED));
-        while (markerPublisher.getNumberOfSubscribers() == 0) {
-            LOGGER.fine("No subscribers");
-            XThread.sleep(100);
-        }
-        markerPublisher.submit(message);
         LOGGER.exiting("publishText");
+    }
+
+    /**
+     * Publish new marker to RViz which will be displayed at the given coords
+     */
+    public void publishMarker(MarkerType markerType, Coordinates coords, Color color, Scale scale) throws Exception {
+        LOGGER.entering("publishMarker");
+        if (!markerPublisherActive) {
+            client.publish(markerPublisher);
+            markerPublisherActive = true;
+        }
+        publish(new MarkerMessage()
+                .withHeader(createHeader())
+                .withNs(new StringMessage("Marker"))
+                .withType(markerType.getType())
+                .withAction(Action.ADD)
+                .withPose(new PoseMessage()
+                        .withPosition(coords.getMessage())
+                        .withQuaternion(new QuaternionMessage()
+                                .withW(1.0)))
+                .withScale(scale.getMessage())
+                .withColor(color.getMessage())
+                .withLifetime(Duration.UNLIMITED));
+        LOGGER.exiting("publishMarker");
     }
 
     @Override
@@ -94,5 +110,21 @@ public class JRosRvizTools implements Closeable {
         }
         markerPublisherActive = false;
         LOGGER.exiting("close");
+    }
+    
+    private void publish(MarkerMessage marker) {
+        var message = new MarkerArrayMessage()
+                .withMarkers(marker);
+        while (markerPublisher.getNumberOfSubscribers() == 0) {
+            LOGGER.fine("No subscribers");
+            XThread.sleep(100);
+        }
+        markerPublisher.submit(message);
+    }
+
+    private HeaderMessage createHeader() {
+        return new HeaderMessage()
+                .withFrameId(baseFrame)
+                .withStamp(Time.now());
     }
 }

@@ -33,7 +33,9 @@ import id.jrosclient.JRosClient;
 import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
 import pinorobotics.jrosrviztools.Color;
+import pinorobotics.jrosrviztools.Coordinates;
 import pinorobotics.jrosrviztools.JRosRvizTools;
+import pinorobotics.jrosrviztools.MarkerType;
 import pinorobotics.jrosrviztools.Scale;
 
 public class JRosRvizToolsIntegrationTests {
@@ -57,5 +59,6 @@ public class JRosRvizToolsIntegrationTests {
     public void test_publish_single() throws Exception {
         rvizTools.publishText(new PoseMessage().withPosition(new PointMessage().withZ(1)),
                 "Hello from Java", Color.RED, Scale.XLARGE);
+        rvizTools.publishMarker(MarkerType.SPHERE, new Coordinates(1,0,1), Color.RED, Scale.XLARGE);
     }
 }

@@ -23,28 +23,19 @@ package pinorobotics.jrosrviztools;
 
 import id.jrosmessages.geometry_msgs.Vector3Message;
 
-public enum Scale {
+public class Scale {
 
-    MEDIUM(new Vector3Message()
-            .withX(0.01)
-            .withY(0.01)
-            .withZ(0.01)),
-    LARGE(new Vector3Message()
-            .withX(0.025)
-            .withY(0.025)
-            .withZ(0.025)),
-    XLARGE(new Vector3Message()
-            .withX(0.05)
-            .withY(0.05)
-            .withZ(0.05));
+    public static final Scale MEDIUM = new Scale(0.01);
+    public static final Scale LARGE = new Scale(0.025);
+    public static final Scale XLARGE = new Scale(0.05);
    
     private Vector3Message message;
 
-    private Scale(Vector3Message message) {
-        this.message = message;
+    public Scale(double scale) {
+        message = new Vector3Message(scale, scale, scale);
     }
     
-    public Vector3Message getMessage() {
+    Vector3Message getMessage() {
         return message;
     }
     
