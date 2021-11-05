@@ -4,14 +4,12 @@ plugins {
 
 apply plugin : 'eclipse'
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
+    implementation 'io.github.lambdaprime:jrosclient:3.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // transitively export following dependency to tests project
+    apiElements 'io.github.lambdaprime:jrosclient:3.0'
     apiElements fileTree(include: ['*.jar'], dir: 'libs')
 }
 
@@ -68,3 +66,15 @@ createRelease.dependsOn createPackage, javadoc
 assemble.dependsOn createRelease
 clean.dependsOn cleanRelease
 
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId = 'jrosrviztools'
+            group = "io.github.pinorobotics"
+            version = "${version}"
+            artifact jar.archiveFile
+        }
+    }
+}

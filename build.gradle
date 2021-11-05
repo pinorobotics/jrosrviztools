@@ -1,9 +1,11 @@
 // Requires gradle 7.2
 // gradle clean build
+// gradle publishToMavenLocal
 
 allprojects {
     repositories {
-        jcenter() 
+        mavenLocal()
+        mavenCentral()
     }
 }
 
