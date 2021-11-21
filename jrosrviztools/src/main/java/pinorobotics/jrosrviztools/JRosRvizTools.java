@@ -42,6 +42,9 @@ import id.jrosmessages.visualization_msgs.MarkerMessage.Type;
 import id.xfunction.lang.XThread;
 import id.xfunction.logging.XLogger;
 
+/**
+ * Set of methods to work with RViz
+ */
 public class JRosRvizTools implements Closeable {
 
     private static final XLogger LOGGER = XLogger.getLogger(JRosRvizTools.class);
@@ -82,7 +85,8 @@ public class JRosRvizTools implements Closeable {
     }
 
     /**
-     * Publish new marker to RViz which will be displayed at the given coords
+     * Publish new marker to RViz
+     * @param points Points with coordinates which describe marker position in space
      */
     public void publishMarkers(ColorRGBAMessage color, Vector3Message scale, MarkerMessage.Type markerType,
             PointMessage... points) throws Exception {

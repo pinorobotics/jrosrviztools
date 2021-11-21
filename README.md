@@ -6,6 +6,10 @@ You can download **jrosrviztools** release versions from <https://github.com/pin
 
 Latest prerelease version can be found here <https://github.com/pinorobotics/jrosrviztools/tree/main/jrosrviztools/release>
 
+# Documentation
+
+Documentation is available here <http://pinoweb.freetzi.com/jrosrviztools>
+
 # Contributors
 
 aeon_flux <aeon_flux@eclipso.ch>

@@ -24,7 +24,7 @@
  * 
  * <p>It is inspired by <a href="https://github.com/PickNikRobotics/rviz_visual_tools">rviz_visual_tools</a>
  * C++ library. It does not require you to install rviz_visual_tools itself since it
- * is not a JNI wrapper to it and is completely written in Java. 
+ * is not a JNI wrapper to it and is completely Java based. 
  * 
  * <p>It is based on <a href="https://github.com/lambdaprime/jrosclient">jrosclient</a> module which is a Java implementation of ROS client.
  * 
