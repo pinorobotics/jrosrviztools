@@ -6,11 +6,9 @@ apply plugin : 'eclipse'
 
 dependencies {
     implementation 'io.github.lambdaprime:jrosclient:3.0'
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // transitively export following dependency to tests project
     apiElements 'io.github.lambdaprime:jrosclient:3.0'
-    apiElements fileTree(include: ['*.jar'], dir: 'libs')
 }
 
 sourceCompatibility = '11'
@@ -20,10 +18,6 @@ jar {
     manifest { 
         attributes 'Implementation-Version': "${rootProject.version}"
     }
-}
-
-java {
-    modularity.inferModulePath = true
 }
 
 javadoc {
@@ -37,8 +31,6 @@ javadoc {
 
 def packageDir = "$buildDir/package/${projectName}"
 
-ext.artifacts = fileTree(include: ['*'], dir: "$packageDir/libs")
-
 task createRelease(type: Zip) {
     archiveFileName = "$releaseFileName"
     destinationDirectory = file("$projectDir/release")
@@ -46,7 +38,7 @@ task createRelease(type: Zip) {
 }
 
 task copyLibs(type: Copy) {
-    from "$projectDir/libs"
+    from configurations.runtimeClasspath
     from jar.archiveFile
     into "${packageDir}/libs"
 }
@@ -66,15 +58,75 @@ createRelease.dependsOn createPackage, javadoc
 assemble.dependsOn createRelease
 clean.dependsOn cleanRelease
 
-apply plugin: 'maven-publish'
+if (project.hasProperty('publishToStagingRepo')) {
 
-publishing {
+  // Initially it was taken from https://central.sonatype.org/publish/publish-gradle/
+  // but since Gradle removed this plugin https://docs.gradle.org/7.0/userguide/upgrading_version_6.html#removal_of_the_legacy_maven_plugin
+  // it was rewritten for new one
+
+  task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from "README-javadoc.txt"
+  }
+
+  task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from "README-sources.txt"
+  }
+
+  java {
+    withJavadocJar()
+    withSourcesJar()
+  }
+
+  apply plugin: 'maven-publish'
+
+  publishing {
     publications {
-        maven(MavenPublication) {
-            artifactId = 'jrosrviztools'
-            group = "io.github.pinorobotics"
-            version = "${version}"
-            artifact jar.archiveFile
+      mavenJava(MavenPublication) {
+        artifactId = 'jrosrviztools'
+        groupId = 'io.github.pinorobotics'
+        from components.java
+        pom {
+          name = 'jrosrviztools'
+          description = 'Java module to interact with RViz in ROS (Robotic Operation System)'
+          url = 'http://pinoweb.freetzi.com/jrosrviztools'
+
+          licenses {
+            license {
+              name = 'The Apache License, Version 2.0'
+              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+
+          developers {
+            developer {
+              id = 'aeon'
+              email = 'aeon_flux@eclipso.ch'
+            }
+          }
+
+          scm {
+            url = 'https://github.com/pinorobotics/jrosrviztools'
+          }
         }
+      }
     }
+    repositories {
+      maven {
+        credentials {
+          username ossrhUsername
+          password ossrhPassword
+        }
+        url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+      }
+    }    
+  }
+
+  apply plugin: 'signing'
+
+  signing {
+    sign publishing.publications.mavenJava
+  }
+
 }
