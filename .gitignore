@@ -4,3 +4,4 @@
 **/.settings/
 **/src/gen/
 **/bld/
+/.project
