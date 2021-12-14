@@ -4,6 +4,14 @@ plugins {
 
 apply plugin : 'eclipse'
 
+eclipse.classpath.file {
+    // because we disable inferModulePath later we intruct eclipse plugin
+    // to put everything to module path
+    whenMerged {
+        entries.findAll { it.kind == 'lib' }.each { it.entryAttributes['module'] = 'true' }
+    }
+}
+
 dependencies {
     implementation 'io.github.lambdaprime:jrosclient:3.0'
 
@@ -58,7 +66,19 @@ createRelease.dependsOn createPackage, javadoc
 assemble.dependsOn createRelease
 clean.dependsOn cleanRelease
 
-if (project.hasProperty('publishToStagingRepo')) {
+task updateVersion() {
+    if (version.contains("SNAPSHOT")) return;
+    println "Updating version to " + version
+    new id.xfunction.text.Substitutor()
+        .withRegexpSupport()
+        .substitute(java.nio.file.Paths.get("${project.rootDir}/README.md"), Map.of(
+            "io.github.pinorobotics:jrosrviztools:[0-9.]+", "io.github.pinorobotics:jrosrviztools:" + version
+        ));
+}
+
+createPackage.dependsOn updateVersion
+
+if (project.hasProperty('publish')) {
 
   // Initially it was taken from https://central.sonatype.org/publish/publish-gradle/
   // but since Gradle removed this plugin https://docs.gradle.org/7.0/userguide/upgrading_version_6.html#removal_of_the_legacy_maven_plugin
@@ -123,10 +143,12 @@ if (project.hasProperty('publishToStagingRepo')) {
     }    
   }
 
-  apply plugin: 'signing'
+  if (project.hasProperty('signing.secretKeyRingFile')) {
+    apply plugin: 'signing'
 
-  signing {
-    sign publishing.publications.mavenJava
+    signing {
+      sign publishing.publications.mavenJava
+    }
   }
 
 }
