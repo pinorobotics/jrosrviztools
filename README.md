@@ -3,7 +3,6 @@
 # Download
 
 [Release versions](https://github.com/pinorobotics/jrosrviztools/releases)
-[Latest prerelease version](https://github.com/pinorobotics/jrosrviztools/tree/main/jrosrviztools/release)
 
 Or you can add dependency to it as follows:
 
@@ -17,21 +16,9 @@ dependencies {
 
 # Documentation
 
-Documentation is available here <http://pinoweb.freetzi.com/jrosrviztools>
+[Documentation](http://pinoweb.freetzi.com/jrosrviztools)
 
-# Development
-
-Building **jrosrviztools** module locally and making changes to it (this is optional and not intended for **jrosrviztools** users).
-
-## With Eclipse
-
-- Build eclipse projects:
-
-``` bash
-gradle eclipse
-```
-
-- Import them into Eclipse
+[Development](DEVELOPMENT.md)
 
 # Contributors
 
