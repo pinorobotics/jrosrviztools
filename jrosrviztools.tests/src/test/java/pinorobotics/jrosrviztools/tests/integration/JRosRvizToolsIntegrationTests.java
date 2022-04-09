@@ -19,17 +19,8 @@
  * Authors:
  * - aeon_flux <aeon_flux@eclipso.ch>
  */
-package pinorobotics.jrosrviztools.tests;
+package pinorobotics.jrosrviztools.tests.integration;
 
-import static pinorobotics.jrosrviztools.tests.TestConstants.URL;
-
-import java.net.MalformedURLException;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import id.jrosclient.JRosClient;
 import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
 import id.jrosmessages.visualization_msgs.MarkerMessage;
@@ -37,25 +28,12 @@ import pinorobotics.jrosrviztools.Colors;
 import pinorobotics.jrosrviztools.JRosRvizTools;
 import pinorobotics.jrosrviztools.Scales;
 
+/**
+ * ROS version agnostic tests.
+ */
 public class JRosRvizToolsIntegrationTests {
 
-    private static JRosClient client;
-    private JRosRvizTools rvizTools;
-
-    @BeforeEach
-    public void setup() throws MalformedURLException {
-        client = new JRosClient(URL);
-        rvizTools = new JRosRvizTools(client, "world");
-    }
-
-    @AfterEach
-    public void clean() throws Exception {
-        rvizTools.close();
-        client.close();
-    }
-    
-    @Test
-    public void test_publish_single() throws Exception {
+    public static void test_all(JRosRvizTools rvizTools) throws Exception {
         rvizTools.publishText(Colors.RED, Scales.XLARGE,
                 new PoseMessage().withPosition(new PointMessage().withZ(1)),
                 "Hello from Java");

@@ -23,9 +23,8 @@ package pinorobotics.jrosrviztools;
 
 import java.io.Closeable;
 import java.io.IOException;
-
-import id.jrosclient.JRosClient;
-import id.jrosclient.TopicSubmissionPublisher;
+import id.jrosclient.core.JRosClient;
+import id.jrosclient.core.TopicSubmissionPublisher;
 import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
 import id.jrosmessages.geometry_msgs.QuaternionMessage;

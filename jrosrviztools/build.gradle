@@ -23,14 +23,13 @@ eclipse.classpath.file {
 }
 
 dependencies {
-    implementation 'io.github.lambdaprime:jrosclient:3.0-SNAPSHOT'
+    implementation 'io.github.lambdaprime:jrosclient.core:1.0-SNAPSHOT'
+    implementation 'io.github.lambdaprime:jrosmessages:1.0-SNAPSHOT'
 
     // transitively export following dependency to tests project
-    apiElements 'io.github.lambdaprime:jrosclient:3.0-SNAPSHOT'
+    apiElements 'io.github.lambdaprime:jrosclient.core:1.0-SNAPSHOT'
+    apiElements 'io.github.lambdaprime:jrosmessages:1.0-SNAPSHOT'
 }
-
-sourceCompatibility = '11'
-targetCompatibility = '11'
 
 jar { 
     manifest { 

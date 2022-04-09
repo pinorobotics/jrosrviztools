@@ -25,5 +25,5 @@ open module jrosrviztools.tests {
     requires jrosrviztools;
     requires org.junit.jupiter.api;
     
-    exports pinorobotics.jrosrviztools.tests;
+    exports pinorobotics.jrosrviztools.tests.integration.ros1;
 }

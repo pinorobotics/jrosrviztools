@@ -19,12 +19,12 @@
  * Authors:
  * - aeon_flux <aeon_flux@eclipso.ch>
  */
-package pinorobotics.jrosrviztools.tests;
+package pinorobotics.jrosrviztools.tests.integration.ros1;
 
 public interface TestConstants {
 
     String CALLER_ID = "jrosclient";
     String TOPIC = "testTopic";
-    String URL = "http://localhost:11311/";
+    String URL = "http://127.0.0.1:11311/";
     int PORT = 1234;
 }
