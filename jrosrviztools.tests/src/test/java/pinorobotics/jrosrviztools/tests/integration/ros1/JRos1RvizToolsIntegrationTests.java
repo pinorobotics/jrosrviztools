@@ -21,7 +21,7 @@
  */
 package pinorobotics.jrosrviztools.tests.integration.ros1;
 
-import static pinorobotics.jrosrviztools.tests.integration.ros1.TestConstants.URL;
+import static pinorobotics.jrosrviztools.tests.integration.ros1.TestConstants.*;
 
 import id.jrosclient.JRos1Client;
 import id.xfunction.logging.XLogger;
@@ -46,7 +46,7 @@ public class JRos1RvizToolsIntegrationTests {
     @BeforeEach
     public void setup() throws MalformedURLException {
         client = new JRos1Client(URL);
-        rvizTools = new JRosRvizTools(client, "world");
+        rvizTools = new JRosRvizTools(client, "map", RVIZ_MARKER_TOPIC);
     }
 
     @AfterEach

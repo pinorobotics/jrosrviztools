@@ -47,18 +47,18 @@ import id.xfunction.logging.XLogger;
 public class JRosRvizTools implements Closeable {
 
     private static final XLogger LOGGER = XLogger.getLogger(JRosRvizTools.class);
-    private static final String RVIZ_MARKER_TOPIC = "/rviz_visual_tools";
     private static final QuaternionMessage ORIENTATION = new QuaternionMessage()
                         .withW(1.0);
-    private TopicSubmissionPublisher<MarkerArrayMessage> markerPublisher = new TopicSubmissionPublisher<>(MarkerArrayMessage.class, RVIZ_MARKER_TOPIC);
+    private TopicSubmissionPublisher<MarkerArrayMessage> markerPublisher;
     private boolean markerPublisherActive;
     private JRosClient client;
     private String baseFrame;
     private volatile int nsCounter;
 
-    public JRosRvizTools(JRosClient client, String baseFrame) {
+    public JRosRvizTools(JRosClient client, String baseFrame, String topic) {
         this.client = client;
         this.baseFrame = baseFrame;
+        markerPublisher = new TopicSubmissionPublisher<>(MarkerArrayMessage.class, topic);
     }
     
     /**
@@ -122,7 +122,7 @@ public class JRosRvizTools implements Closeable {
         LOGGER.entering("close");
         if (markerPublisherActive) {
             markerPublisher.close();
-            client.unpublish(RVIZ_MARKER_TOPIC);
+            client.unpublish(markerPublisher.getTopic());
         }
         markerPublisherActive = false;
         LOGGER.exiting("close");

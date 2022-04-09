@@ -27,4 +27,5 @@ public interface TestConstants {
     String TOPIC = "testTopic";
     String URL = "http://127.0.0.1:11311/";
     int PORT = 1234;
+    String RVIZ_MARKER_TOPIC = "/visualization_marker_array";
 }

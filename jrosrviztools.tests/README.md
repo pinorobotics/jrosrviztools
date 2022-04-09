@@ -1,17 +1,11 @@
 Tests for `jrosrviztools` library.
 
-# Prereqs
-
-- rviz-visual-tools
-```bash
-sudo apt install ros-noetic-rviz-visual-tools
-```
-
 # Run
 
-Before starting tests make sure to run:
+Before starting tests make sure to run RViz:
 
 ```bash
-roslaunch rviz_visual_tools demo_rviz.launch
+rviz
 ```
 
+Then add "rviz" - "Marker Array". This should subscribe RViz to "visualization_marker_array" topic which is used for testing.

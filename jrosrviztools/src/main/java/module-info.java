@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Authors:
- * - aeon_flux <aeon_flux@eclipso.ch>
- */
 /**
- * <p>Java module which allows to interact with RViz ROS (Robotic Operation System).</p>
+ * <p>Java module which allows to interact with RViz ROS (Robot Operating
+ * System).</p>
+ * 
+ * <p>It allows you to publish different kind of visualization information into RViz,
+ * among it text, geometric shapes (cube, cylinder etc), points etc.
  * 
  * <p>It is inspired by <a href="https://github.com/PickNikRobotics/rviz_visual_tools">rviz_visual_tools</a>
  * C++ library. It does not require you to install rviz_visual_tools itself since it
@@ -30,7 +30,7 @@
  * 
  * @see <a href="https://github.com/pinorobotics/jrosrviztools/releases">Download</a>
  * @see <a href="https://github.com/pinorobotics/jrosrviztools">GitHub repository</a>
- * 
+ * @author aeon_flux aeon_flux@eclipso.ch
  */
 module jrosrviztools {
     
