@@ -15,12 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Authors:
- * - aeon_flux <aeon_flux@eclipso.ch>
- */
 package pinorobotics.jrosrviztools.tests.integration.ros1;
 
+/** @author aeon_flux aeon_flux@eclipso.ch */
 public interface TestConstants {
 
     String CALLER_ID = "jrosclient";

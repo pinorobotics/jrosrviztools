@@ -15,10 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Authors:
- * - aeon_flux <aeon_flux@eclipso.ch>
- */
 package pinorobotics.jrosrviztools.tests.integration;
 
 import id.jrosmessages.geometry_msgs.PointMessage;
@@ -30,14 +26,18 @@ import pinorobotics.jrosrviztools.Scales;
 
 /**
  * ROS version agnostic tests.
+ *
+ * @author aeon_flux aeon_flux@eclipso.ch
  */
 public class JRosRvizToolsIntegrationTests {
 
     public static void test_all(JRosRvizTools rvizTools) throws Exception {
-        rvizTools.publishText(Colors.RED, Scales.XLARGE,
+        rvizTools.publishText(
+                Colors.RED,
+                Scales.XLARGE,
                 new PoseMessage().withPosition(new PointMessage().withZ(1)),
                 "Hello from Java");
-        rvizTools.publishMarkers(Colors.RED, Scales.XLARGE,
-                MarkerMessage.Type.SPHERE, new PointMessage(1,0,1));
+        rvizTools.publishMarkers(
+                Colors.RED, Scales.XLARGE, MarkerMessage.Type.SPHERE, new PointMessage(1, 0, 1));
     }
 }

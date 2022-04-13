@@ -15,10 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Authors:
- * - aeon_flux <aeon_flux@eclipso.ch>
- */
 package pinorobotics.jrosrviztools.tests.integration.ros1;
 
 import static pinorobotics.jrosrviztools.tests.integration.ros1.TestConstants.*;
@@ -33,6 +29,7 @@ import org.junit.jupiter.api.Test;
 import pinorobotics.jrosrviztools.JRosRvizTools;
 import pinorobotics.jrosrviztools.tests.integration.JRosRvizToolsIntegrationTests;
 
+/** @author aeon_flux aeon_flux@eclipso.ch */
 public class JRos1RvizToolsIntegrationTests {
 
     private JRos1Client client;
@@ -42,7 +39,7 @@ public class JRos1RvizToolsIntegrationTests {
     public static void setupAll() {
         XLogger.load("jrosrviztools-test.properties");
     }
-    
+
     @BeforeEach
     public void setup() throws MalformedURLException {
         client = new JRos1Client(URL);
@@ -54,7 +51,7 @@ public class JRos1RvizToolsIntegrationTests {
         rvizTools.close();
         client.close();
     }
-    
+
     @Test
     public void test_all() throws Exception {
         JRosRvizToolsIntegrationTests.test_all(rvizTools);

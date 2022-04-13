@@ -15,18 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Authors:
- * - aeon_flux <aeon_flux@eclipso.ch>
- */
 package pinorobotics.jrosrviztools;
 
 import id.jrosmessages.geometry_msgs.Vector3Message;
 
+/** @author aeon_flux aeon_flux@eclipso.ch */
 public class Scales {
 
     public static final Vector3Message MEDIUM = new Vector3Message(0.01, 0.01, 0.01);
     public static final Vector3Message LARGE = new Vector3Message(0.025, 0.025, 0.025);
     public static final Vector3Message XLARGE = new Vector3Message(0.05, 0.05, 0.05);
-   
 }
