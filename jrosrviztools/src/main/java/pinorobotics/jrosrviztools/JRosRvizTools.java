@@ -19,10 +19,8 @@ package pinorobotics.jrosrviztools;
 
 import id.jrosclient.core.JRosClient;
 import id.jrosclient.core.TopicSubmissionPublisher;
-import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
 import id.jrosmessages.geometry_msgs.QuaternionMessage;
-import id.jrosmessages.geometry_msgs.Vector3Message;
 import id.jrosmessages.primitives.Duration;
 import id.jrosmessages.primitives.Time;
 import id.jrosmessages.ros1.std_msgs.HeaderMessage;
@@ -30,12 +28,16 @@ import id.jrosmessages.ros1.visualization_msgs.MarkerArrayMessage;
 import id.jrosmessages.ros1.visualization_msgs.MarkerMessage;
 import id.jrosmessages.ros1.visualization_msgs.MarkerMessage.Action;
 import id.jrosmessages.ros1.visualization_msgs.MarkerMessage.Type;
-import id.jrosmessages.std_msgs.ColorRGBAMessage;
 import id.jrosmessages.std_msgs.StringMessage;
 import id.xfunction.lang.XThread;
 import id.xfunction.logging.XLogger;
 import java.io.Closeable;
 import java.io.IOException;
+import pinorobotics.jrosrviztools.entities.Color;
+import pinorobotics.jrosrviztools.entities.MarkerType;
+import pinorobotics.jrosrviztools.entities.Point;
+import pinorobotics.jrosrviztools.entities.Pose;
+import pinorobotics.jrosrviztools.entities.Vector3;
 
 /**
  * Set of methods to work with RViz
@@ -51,6 +53,7 @@ public class JRosRvizTools implements Closeable {
     private JRosClient client;
     private String baseFrame;
     private volatile int nsCounter;
+    private Transformer transformer = new Transformer();
 
     public JRosRvizTools(JRosClient client, String baseFrame, String topic) {
         this.client = client;
@@ -59,9 +62,7 @@ public class JRosRvizTools implements Closeable {
     }
 
     /** Send text message to RViz which will be displayed at the given position. */
-    public void publishText(
-            ColorRGBAMessage color, Vector3Message scale, PoseMessage pose, String text)
-            throws Exception {
+    public void publishText(Color color, Vector3 scale, Pose pose, String text) throws Exception {
         LOGGER.entering("publishText");
         if (!markerPublisherActive) {
             client.publish(markerPublisher);
@@ -74,9 +75,9 @@ public class JRosRvizTools implements Closeable {
                         .withType(Type.TEXT_VIEW_FACING)
                         .withAction(Action.ADD)
                         .withText(new StringMessage().withData(text))
-                        .withPose(pose.withQuaternion(ORIENTATION))
-                        .withColor(color)
-                        .withScale(scale)
+                        .withPose(transformer.toPoseMessage(pose).withQuaternion(ORIENTATION))
+                        .withColor(transformer.toColorRGBMessage(color))
+                        .withScale(transformer.toVector3Message(scale))
                         .withLifetime(Duration.UNLIMITED));
         LOGGER.exiting("publishText");
     }
@@ -86,11 +87,7 @@ public class JRosRvizTools implements Closeable {
      *
      * @param points Points with coordinates which describe marker position in space
      */
-    public void publishMarkers(
-            ColorRGBAMessage color,
-            Vector3Message scale,
-            MarkerMessage.Type markerType,
-            PointMessage... points)
+    public void publishMarkers(Color color, Vector3 scale, MarkerType markerType, Point... points)
             throws Exception {
         LOGGER.entering("publishMarker");
         if (!markerPublisherActive) {
@@ -103,14 +100,14 @@ public class JRosRvizTools implements Closeable {
                     new MarkerMessage()
                             .withHeader(createHeader())
                             .withNs(new StringMessage(nextNameSpace()))
-                            .withType(markerType)
+                            .withType(transformer.toMarkerType(markerType))
                             .withAction(Action.ADD)
                             .withPose(
                                     new PoseMessage()
-                                            .withPosition(points[i])
+                                            .withPosition(transformer.toPointMessage(points[i]))
                                             .withQuaternion(new QuaternionMessage().withW(1.0)))
-                            .withScale(scale)
-                            .withColor(color)
+                            .withScale(transformer.toVector3Message(scale))
+                            .withColor(transformer.toColorRGBMessage(color))
                             .withLifetime(Duration.UNLIMITED);
         }
         publish(markers);

@@ -17,12 +17,12 @@
  */
 package pinorobotics.jrosrviztools.tests.integration;
 
-import id.jrosmessages.geometry_msgs.PointMessage;
-import id.jrosmessages.geometry_msgs.PoseMessage;
-import id.jrosmessages.ros1.visualization_msgs.MarkerMessage;
-import pinorobotics.jrosrviztools.Colors;
 import pinorobotics.jrosrviztools.JRosRvizTools;
-import pinorobotics.jrosrviztools.Scales;
+import pinorobotics.jrosrviztools.entities.Color;
+import pinorobotics.jrosrviztools.entities.MarkerType;
+import pinorobotics.jrosrviztools.entities.Point;
+import pinorobotics.jrosrviztools.entities.Pose;
+import pinorobotics.jrosrviztools.entities.Scales;
 
 /**
  * ROS version agnostic tests.
@@ -33,11 +33,7 @@ public class JRosRvizToolsIntegrationTests {
 
     public static void test_all(JRosRvizTools rvizTools) throws Exception {
         rvizTools.publishText(
-                Colors.RED,
-                Scales.XLARGE,
-                new PoseMessage().withPosition(new PointMessage().withZ(1)),
-                "Hello from Java");
-        rvizTools.publishMarkers(
-                Colors.RED, Scales.XLARGE, MarkerMessage.Type.SPHERE, new PointMessage(1, 0, 1));
+                Color.RED, Scales.XLARGE, new Pose(new Point(0, 0, 1)), "Hello from Java");
+        rvizTools.publishMarkers(Color.RED, Scales.XLARGE, MarkerType.SPHERE, new Point(1, 0, 1));
     }
 }

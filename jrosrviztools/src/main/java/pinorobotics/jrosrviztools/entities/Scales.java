@@ -15,17 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pinorobotics.jrosrviztools;
-
-import id.jrosmessages.std_msgs.ColorRGBAMessage;
+package pinorobotics.jrosrviztools.entities;
 
 /** @author aeon_flux aeon_flux@eclipso.ch */
-public class Colors {
+public class Scales {
 
-    public static final ColorRGBAMessage RED = new ColorRGBAMessage(.8F, .1F, .1F, 1);
-    public static final ColorRGBAMessage GREEN = new ColorRGBAMessage(.1F, .8F, .1F, 1);
-    public static final ColorRGBAMessage GREY = new ColorRGBAMessage(.9F, .9F, .9F, 1);
-    public static final ColorRGBAMessage BLACK = new ColorRGBAMessage(.0F, .0F, .0F, 1);
-    public static final ColorRGBAMessage YELLOW = new ColorRGBAMessage(1.0F, 1.0F, .0F, 1);
-    public static final ColorRGBAMessage WHITE = new ColorRGBAMessage(1.F, 1.F, 1.F, 1);
+    public static final Vector3 MEDIUM = new Vector3(0.01, 0.01, 0.01);
+    public static final Vector3 LARGE = new Vector3(0.025, 0.025, 0.025);
+    public static final Vector3 XLARGE = new Vector3(0.05, 0.05, 0.05);
 }

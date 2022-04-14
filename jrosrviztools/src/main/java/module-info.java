@@ -42,4 +42,5 @@ module jrosrviztools {
     requires id.xfunction;
 
     exports pinorobotics.jrosrviztools;
+    exports pinorobotics.jrosrviztools.entities;
 }

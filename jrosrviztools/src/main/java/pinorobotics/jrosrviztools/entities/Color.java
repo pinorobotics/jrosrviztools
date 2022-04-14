@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 jrosrviztools project
+ * Copyright 2022 jrosrviztools project
  * 
  * Website: https://github.com/pinorobotics/jrosrviztools
  * 
@@ -15,14 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pinorobotics.jrosrviztools;
-
-import id.jrosmessages.geometry_msgs.Vector3Message;
+package pinorobotics.jrosrviztools.entities;
 
 /** @author aeon_flux aeon_flux@eclipso.ch */
-public class Scales {
+public record Color(float r, float g, float b, float a) {
 
-    public static final Vector3Message MEDIUM = new Vector3Message(0.01, 0.01, 0.01);
-    public static final Vector3Message LARGE = new Vector3Message(0.025, 0.025, 0.025);
-    public static final Vector3Message XLARGE = new Vector3Message(0.05, 0.05, 0.05);
+    public static final Color RED = new Color(.8F, .1F, .1F, 1);
+    public static final Color GREEN = new Color(.1F, .8F, .1F, 1);
+    public static final Color GREY = new Color(.9F, .9F, .9F, 1);
+    public static final Color BLACK = new Color(.0F, .0F, .0F, 1);
+    public static final Color YELLOW = new Color(1.0F, 1.0F, .0F, 1);
+    public static final Color WHITE = new Color(1.F, 1.F, 1.F, 1);
 }
