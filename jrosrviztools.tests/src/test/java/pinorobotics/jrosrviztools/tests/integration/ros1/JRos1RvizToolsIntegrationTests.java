@@ -26,14 +26,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pinorobotics.jrosrviztools.JRosRvizTools;
+import pinorobotics.jrosrviztools.JRos1RvizTools;
 import pinorobotics.jrosrviztools.tests.integration.JRosRvizToolsIntegrationTests;
 
 /** @author aeon_flux aeon_flux@eclipso.ch */
 public class JRos1RvizToolsIntegrationTests {
 
     private JRos1Client client;
-    private JRosRvizTools rvizTools;
+    private JRos1RvizTools rvizTools;
 
     @BeforeAll
     public static void setupAll() {
@@ -43,7 +43,7 @@ public class JRos1RvizToolsIntegrationTests {
     @BeforeEach
     public void setup() throws MalformedURLException {
         client = new JRos1Client(URL);
-        rvizTools = new JRosRvizTools(client, "map", RVIZ_MARKER_TOPIC);
+        rvizTools = new JRos1RvizTools(client, "map", RVIZ_MARKER_TOPIC);
     }
 
     @AfterEach
