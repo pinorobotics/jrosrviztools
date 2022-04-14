@@ -19,7 +19,7 @@ package pinorobotics.jrosrviztools.tests.integration;
 
 import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
-import id.jrosmessages.visualization_msgs.MarkerMessage;
+import id.jrosmessages.ros1.visualization_msgs.MarkerMessage;
 import pinorobotics.jrosrviztools.Colors;
 import pinorobotics.jrosrviztools.JRosRvizTools;
 import pinorobotics.jrosrviztools.Scales;
