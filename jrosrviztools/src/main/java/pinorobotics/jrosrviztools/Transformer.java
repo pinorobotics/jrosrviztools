@@ -21,10 +21,8 @@ import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
 import id.jrosmessages.geometry_msgs.QuaternionMessage;
 import id.jrosmessages.geometry_msgs.Vector3Message;
-import id.jrosmessages.ros1.visualization_msgs.MarkerMessage;
 import id.jrosmessages.std_msgs.ColorRGBAMessage;
 import pinorobotics.jrosrviztools.entities.Color;
-import pinorobotics.jrosrviztools.entities.MarkerType;
 import pinorobotics.jrosrviztools.entities.Point;
 import pinorobotics.jrosrviztools.entities.Pose;
 import pinorobotics.jrosrviztools.entities.Quaternion;
@@ -46,21 +44,6 @@ public class Transformer {
     private QuaternionMessage toQuaternionMessage(Quaternion quaternion) {
         return new QuaternionMessage(
                 quaternion.x(), quaternion.y(), quaternion.z(), quaternion.w());
-    }
-
-    public MarkerMessage.Type toMarkerType(MarkerType markerType) {
-        switch (markerType) {
-            case ARROW:
-                return MarkerMessage.Type.ARROW;
-            case CUBE:
-                return MarkerMessage.Type.CUBE;
-            case SPHERE:
-                return MarkerMessage.Type.SPHERE;
-            case CYLINDER:
-                return MarkerMessage.Type.CYLINDER;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + markerType);
-        }
     }
 
     public Vector3Message toVector3Message(Vector3 vector) {

@@ -1,4 +1,4 @@
-**jrosrviztools** - Java module which allows to interact with RViz in ROS (Robotic Operation System).
+**jrosrviztools** - base Java module for interaction with RViz in ROS (Robot Operating System). It contains only interfaces and classes which are agnostic to ROS version.
 
 # Download
 

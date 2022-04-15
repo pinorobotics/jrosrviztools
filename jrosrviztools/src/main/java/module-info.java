@@ -37,8 +37,7 @@ module jrosrviztools {
 
     // since many of our API relies on jrosclient.core classes we need to ensure
     // that all modules reading this module also read jrosclient.core
-    requires transitive jrosclient.core;
-    requires jros1messages;
+    requires transitive jrosclient;
     requires id.xfunction;
 
     exports pinorobotics.jrosrviztools;
