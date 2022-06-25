@@ -17,7 +17,9 @@
  */
 package pinorobotics.jrosrviztools.entities;
 
-/** @author aeon_flux aeon_flux@eclipso.ch */
+/**
+ * @author aeon_flux aeon_flux@eclipso.ch
+ */
 public record Color(float r, float g, float b, float a) {
 
     public static final Color RED = new Color(.8F, .1F, .1F, 1);

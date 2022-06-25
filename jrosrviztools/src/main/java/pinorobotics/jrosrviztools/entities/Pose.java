@@ -17,7 +17,9 @@
  */
 package pinorobotics.jrosrviztools.entities;
 
-/** @author aeon_flux aeon_flux@eclipso.ch */
+/**
+ * @author aeon_flux aeon_flux@eclipso.ch
+ */
 public record Pose(Point position, Quaternion orientation) {
 
     public Pose(Quaternion orientation) {

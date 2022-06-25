@@ -17,7 +17,9 @@
  */
 package pinorobotics.jrosrviztools.entities;
 
-/** @author aeon_flux aeon_flux@eclipso.ch */
+/**
+ * @author aeon_flux aeon_flux@eclipso.ch
+ */
 public class Scales {
 
     public static final Vector3 MEDIUM = new Vector3(0.01, 0.01, 0.01);

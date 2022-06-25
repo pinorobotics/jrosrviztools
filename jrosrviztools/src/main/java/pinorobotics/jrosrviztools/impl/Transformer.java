@@ -28,7 +28,9 @@ import pinorobotics.jrosrviztools.entities.Pose;
 import pinorobotics.jrosrviztools.entities.Quaternion;
 import pinorobotics.jrosrviztools.entities.Vector3;
 
-/** @author aeon_flux aeon_flux@eclipso.ch */
+/**
+ * @author aeon_flux aeon_flux@eclipso.ch
+ */
 public class Transformer {
 
     public PointMessage toPointMessage(Point point) {

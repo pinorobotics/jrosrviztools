@@ -17,7 +17,9 @@
  */
 package pinorobotics.jrosrviztools.entities;
 
-/** @author aeon_flux aeon_flux@eclipso.ch */
+/**
+ * @author aeon_flux aeon_flux@eclipso.ch
+ */
 public record Point(double x, double y, double z) {
     public static final Point ZEROES = new Point(0, 0, 0);
 }

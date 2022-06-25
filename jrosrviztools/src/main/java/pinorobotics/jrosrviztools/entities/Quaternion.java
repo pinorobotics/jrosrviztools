@@ -17,7 +17,9 @@
  */
 package pinorobotics.jrosrviztools.entities;
 
-/** @author aeon_flux aeon_flux@eclipso.ch */
+/**
+ * @author aeon_flux aeon_flux@eclipso.ch
+ */
 public record Quaternion(double x, double y, double z, double w) {
 
     public static final Quaternion ZEROES = new Quaternion(0, 0, 0, 0);
