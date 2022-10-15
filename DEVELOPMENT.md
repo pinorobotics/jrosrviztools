@@ -1,4 +1,4 @@
-Building **jrosrviztools** module locally and making changes to it (this is optional and not intended for **jrosrviztools** users).
+Building module locally and making changes to it (this is optional and not intended for users).
 
 ## With Eclipse
 
