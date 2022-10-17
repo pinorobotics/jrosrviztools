@@ -15,23 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pinorobotics.jrosrviztools.impl;
+package pinorobotics.jrosrviztools.entities;
 
 import id.jrosmessages.geometry_msgs.PointMessage;
 import id.jrosmessages.geometry_msgs.PoseMessage;
 import id.jrosmessages.geometry_msgs.QuaternionMessage;
 import id.jrosmessages.geometry_msgs.Vector3Message;
 import id.jrosmessages.std_msgs.ColorRGBAMessage;
-import pinorobotics.jrosrviztools.entities.Color;
-import pinorobotics.jrosrviztools.entities.Point;
-import pinorobotics.jrosrviztools.entities.Pose;
-import pinorobotics.jrosrviztools.entities.Quaternion;
-import pinorobotics.jrosrviztools.entities.Vector3;
 
 /**
  * @author aeon_flux aeon_flux@eclipso.ch
  */
-public class Transformer {
+public class JRosRvizEntitiesTransformer {
 
     public PointMessage toPointMessage(Point point) {
         return new PointMessage(point.x(), point.y(), point.z());
