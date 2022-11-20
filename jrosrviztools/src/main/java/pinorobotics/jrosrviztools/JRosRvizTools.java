@@ -17,7 +17,6 @@
  */
 package pinorobotics.jrosrviztools;
 
-import java.io.Closeable;
 import pinorobotics.jrosrviztools.entities.Color;
 import pinorobotics.jrosrviztools.entities.MarkerType;
 import pinorobotics.jrosrviztools.entities.Point;
@@ -29,7 +28,7 @@ import pinorobotics.jrosrviztools.entities.Vector3;
  *
  * @author aeon_flux aeon_flux@eclipso.ch
  */
-public interface JRosRvizTools extends Closeable {
+public interface JRosRvizTools extends AutoCloseable {
 
     void publishText(Color color, Vector3 scale, Pose pose, String text) throws Exception;
 
