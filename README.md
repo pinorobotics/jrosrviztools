@@ -6,7 +6,7 @@ For ROS1 see [jros1rviztools](https://github.com/pinorobotics/jros1rviztools)
 
 # Download
 
-[Release versions](https://github.com/pinorobotics/jrosrviztools/releases)
+[Release versions](jrosrviztools/release/CHANGELOG.md)
 
 Or you can add dependency to it as follows:
 
@@ -14,7 +14,7 @@ Gradle:
 
 ```
 dependencies {
-    implementation 'io.github.pinorobotics:jrosrviztools:1.0'
+  implementation 'io.github.pinorobotics:jrosrviztools:1.0'
 }
 ```
 
@@ -24,6 +24,6 @@ dependencies {
 
 [Development](DEVELOPMENT.md)
 
-# Contributors
+# Contacts
 
 aeon_flux <aeon_flux@eclipso.ch>

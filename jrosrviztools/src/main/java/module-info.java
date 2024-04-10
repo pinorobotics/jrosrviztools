@@ -29,7 +29,8 @@
  * <p>It is based on <a href="https://github.com/lambdaprime/jrosclient">jrosclient</a> module which
  * is a Java implementation of ROS client.
  *
- * @see <a href="https://github.com/pinorobotics/jrosrviztools/releases">Download</a>
+ * @see <a href=
+ *     "https://github.com/pinorobotics/jrosrviztools/blob/main/jrosrviztools/release/CHANGELOG.md">Releases</a>
  * @see <a href="https://github.com/pinorobotics/jrosrviztools">GitHub repository</a>
  * @author aeon_flux aeon_flux@eclipso.ch
  */
@@ -38,7 +39,6 @@ module jrosrviztools {
     // since many of our API relies on jrosclient.core classes we need to ensure
     // that all modules reading this module also read jrosclient.core
     requires transitive jrosclient;
-    requires id.xfunction;
 
     exports pinorobotics.jrosrviztools;
     exports pinorobotics.jrosrviztools.entities;
