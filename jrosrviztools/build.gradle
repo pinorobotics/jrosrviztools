@@ -28,11 +28,7 @@ eclipse.classpath.file {
 }
 
 dependencies {
-  def jrosclient = 'io.github.lambdaprime:jrosclient:6.0-SNAPSHOT'
-  def jrosmessages = 'io.github.lambdaprime:jrosmessages:2.0-SNAPSHOT'
-
-  implementation "${jrosclient}"
-  implementation "${jrosmessages}"
+  implementation "io.github.lambdaprime:jrosclient:8.0"
 }
 
 jar {
@@ -50,6 +46,11 @@ javadoc {
   // ignore missing @return, @param etc
   options.addBooleanOption('Xdoclint:all,-missing', true)
   options.addStringOption('-show-packages', 'exported')
+  // should point to location of element-list files
+  options.addMultilineStringsOption("link").value = [
+    "http://portal2.atwebpages.com/jrosclient/javadoc/jrosclient/",
+    "http://portal2.atwebpages.com/jrosclient/javadoc/jrosmessages/",
+  ]
 }
 
 def packageDir = "$buildDir/package/${projectName}"
