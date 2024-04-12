@@ -28,12 +28,12 @@ eclipse.classpath.file {
 }
 
 dependencies {
-  implementation "io.github.lambdaprime:jrosclient:8.0"
+  zzApiDependencies.split(',').each { api it }
 }
 
 jar {
   manifest { 
-    attributes 'Implementation-Version': "${rootProject.version}"
+    attributes 'Implementation-Version': "${version}"
   }
 }
 
@@ -46,14 +46,13 @@ javadoc {
   // ignore missing @return, @param etc
   options.addBooleanOption('Xdoclint:all,-missing', true)
   options.addStringOption('-show-packages', 'exported')
-  // should point to location of element-list files
-  options.addMultilineStringsOption("link").value = [
-    "http://portal2.atwebpages.com/jrosclient/javadoc/jrosclient/",
-    "http://portal2.atwebpages.com/jrosclient/javadoc/jrosmessages/",
-  ]
+  if (!zzJavadocLinks.isBlank()) {
+    // should point to location of element-list files
+    options.addMultilineStringsOption("link").value = Arrays.asList(zzJavadocLinks.split(','))
+  }
 }
 
-def packageDir = "$buildDir/package/${projectName}"
+def packageDir = "$buildDir/package/${zzName}"
 
 task createRelease(type: Zip) {
     archiveFileName = "$releaseFileName"
@@ -70,7 +69,6 @@ task copyLibs(type: Copy) {
 task createPackage(type: Copy, dependsOn: [copyLibs]) {
     from "${project.rootDir}/README.md"
     from "${project.rootDir}/LICENSE-2.0.txt"
-    from file("$projectDir/src/jrosrviztools")
     into packageDir
 }
 
@@ -92,7 +90,7 @@ task updateVersion() {
   new id.xfunction.text.Substitutor()
     .withRegexpSupport()
     .substitute(java.nio.file.Paths.get("${project.rootDir}/README.md"), Map.of(
-      "io.github.lambdaprime:hello:[0-9.]+", "io.github.lambdaprime:hello:" + version
+      "io.github.${zzNamespace}:${zzName}:[0-9.]+", "io.github.${zzNamespace}:${zzName}:" + version
     ));
 }
 createRelease.dependsOn updateVersion
@@ -123,13 +121,13 @@ if (project.hasProperty('publish')) {
   publishing {
     publications {
       mavenJava(MavenPublication) {
-        artifactId = 'jrosrviztools'
-        groupId = 'io.github.pinorobotics'
+        artifactId = zzName
+        groupId = "io.github.${zzNamespace}"
         from components.java
         pom {
-          name = 'jrosrviztools'
-          description = 'Java module to interact with RViz in ROS (Robot Operating System)'
-          url = 'http://pinoweb.freetzi.com/jrosrviztools'
+          name = zzName
+          description = zzDescription
+          url = zzUrl
 
           licenses {
             license {
@@ -140,13 +138,13 @@ if (project.hasProperty('publish')) {
 
           developers {
             developer {
-              id = 'aeon'
-              email = 'aeon_flux@eclipso.ch'
+              id = zzDevName
+              email = zzDevEmail
             }
           }
 
           scm {
-            url = 'https://github.com/pinorobotics/jrosrviztools'
+            url = zzRepoUrl
           }
         }
       }
