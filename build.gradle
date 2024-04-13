@@ -42,9 +42,9 @@ subprojects {
         googleJavaFormat().aosp().reflowLongStrings()
 
         licenseHeader '''/*
- * Copyright $YEAR %1$s project
+ * Copyright $YEAR %s project
  * 
- * Website: https://github.com/%2$s/%1$s
+ * Website: https://github.com/%s/%s
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ subprojects {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'''.formatted("${zzName}", "${zzNamespace}")
+'''.formatted(zzCopyright, zzNamespace, zzName)
       }
     }
   }
