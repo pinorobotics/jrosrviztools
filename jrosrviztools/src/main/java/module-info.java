@@ -42,4 +42,5 @@ module jrosrviztools {
 
     exports pinorobotics.jrosrviztools;
     exports pinorobotics.jrosrviztools.entities;
+    exports pinorobotics.jrosrviztools.exceptions;
 }

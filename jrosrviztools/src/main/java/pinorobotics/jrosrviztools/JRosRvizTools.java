@@ -22,6 +22,7 @@ import pinorobotics.jrosrviztools.entities.MarkerType;
 import pinorobotics.jrosrviztools.entities.Point;
 import pinorobotics.jrosrviztools.entities.Pose;
 import pinorobotics.jrosrviztools.entities.Vector3;
+import pinorobotics.jrosrviztools.exceptions.JRosRvizToolsException;
 
 /**
  * Set of methods to work with RViz
@@ -30,13 +31,17 @@ import pinorobotics.jrosrviztools.entities.Vector3;
  */
 public interface JRosRvizTools extends AutoCloseable {
 
-    void publishText(Color color, Vector3 scale, Pose pose, String text) throws Exception;
+    void publishTextAsync(Color color, Vector3 scale, Pose pose, String text)
+            throws JRosRvizToolsException;
 
     /**
      * Publish new marker to RViz
      *
      * @param points Points with coordinates which describe marker position in space
      */
-    void publishMarkers(Color color, Vector3 scale, MarkerType markerType, Point... points)
-            throws Exception;
+    void publishMarkersAsync(Color color, Vector3 scale, MarkerType markerType, Point... points)
+            throws JRosRvizToolsException;
+
+    @Override
+    void close();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 jrosrviztools project
+ * Copyright 2022 jrosrviztools project
  * 
  * Website: https://github.com/pinorobotics/jrosrviztools
  * 
@@ -15,15 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pinorobotics.jrosrviztools.entities;
+package pinorobotics.jrosrviztools.exceptions;
 
 /**
+ * Main unchecked exception for all functionality related to <b>jrosrviztools</b>
+ *
  * @author aeon_flux aeon_flux@eclipso.ch
  */
-public class Scales {
+public class JRosRvizToolsException extends RuntimeException {
 
-    public static final Vector3 NORMAL = new Vector3(1, 1, 1);
-    public static final Vector3 MEDIUM = new Vector3(0.01, 0.01, 0.01);
-    public static final Vector3 LARGE = new Vector3(0.025, 0.025, 0.025);
-    public static final Vector3 XLARGE = new Vector3(0.05, 0.05, 0.05);
+    private static final long serialVersionUID = 1L;
+
+    public JRosRvizToolsException(String fmt, Object... args) {
+        super(String.format(fmt, args));
+    }
+
+    public JRosRvizToolsException(Exception e) {
+        super(e);
+    }
 }
